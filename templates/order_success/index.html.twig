@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma commande{% endblock %}
+
+{% block content %}
+
+<h1 class="mt-3">Confirmation commande</h1>
+
+La commande d'un total de {{(total/100) | number_format(2)}} € a été passée avec success
+{% endblock %}

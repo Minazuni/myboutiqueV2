@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace membre{% endblock %}
+
+{% block content %}
+
+<h1 class="mt-4">Mon compte</h1>
+Bienvenu {{app.user.lastName}} {{app.user.firstName}} dans votre compte - vous pouvez gérer vos informations personnelles.<br>
+
+
+
+<br>
+- <a href="{{path('account_password')}}">Modification de mot de passe</a><br>
+- <a href="{{path('account_address')}}">Gérer mes adresses</a><br>
+- Les commandes<br>
+
+
+
+
+{% endblock %}

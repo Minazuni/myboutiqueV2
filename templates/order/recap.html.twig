@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérifier ma Commmande
+{% endblock %}
+
+{% block content %}
+	<h1 class="mt-3">Je Verifie ma commande</h1>
+	<p>Vérifier votre commande avant de payer</p>
+	<hr>
+
+	<div class="row">
+
+		<div class="col-md-6">
+
+<strong>Adresse de livraison</strong><br>
+{{order.delivery | replace ({'[br]':'<br>'}) | raw}}
+<hr>
+<strong>Transport</strong><br>
+{{order.carrier.name}}<br>
+{{order.carrier.description}}<br>
+{{order.carrier.price}} €
+
+			</div>
+
+			<div class="col-md-6">
+
+				{% set total = null %}
+				{% for product in cart %}
+				{% set total = total + product.quantity*product.product.price %}
+
+					<div class="row mt-2">
+						<div class="col-md-2">
+							<img src="/uploads/{{product.product.picture}}" alt="" class="img-fluid">
+						</div>
+						<div class="col-md-8">
+							{{product.product.name}}<br>
+							{{product.product.subtitle}}
+						</div>
+						<div class="col-md-2">
+							{{product.quantity}}
+						</div>
+
+					</div>
+
+
+				{% endfor %}
+<hr>
+<strong>Sous-total:</strong>
+{{total/100 | number_format(2)}} €<br>
+<strong>Livraison:</strong>
+{{order.carrier.price}} €<br>
+<hr>
+<strong>Total:</strong>
+{{(total/100 + order.carrier.price) | number_format(2)}} €
+
+<a href="{{url_stripe}}" class="btn btn-success col-12" >Payer {{(total/100 + order.carrier.price) | number_format(2)}} €</a>
+
+			</div>
+
+
+		</div>
+
+
+	{% endblock %}

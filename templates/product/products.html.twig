@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos produits
+{% endblock %}
+
+{% block content %}
+
+	<h1 class="mt-3">Nos produits</h1>
+
+	<div class="row">
+
+		<div class="col-md-3">
+
+			{{form(form)}}
+
+			</div>
+
+			<div class="col-md-9">
+				{% if products is empty %}
+					<div class="alert alert-danger col-12" role="alert">
+						Il n'y a pas de produits ces/cette catégorie(s)
+					</div>
+
+				{% endif %}
+				<div class="row row-cols-1 row-cols-md-3 g-4">
+
+
+					{% for product in products %}
+
+						<div class="col">
+							<div class="card">
+								<a href="{{path('product',{'slug':product.slug})}}"><img src="/uploads/{{product.picture}}" class="card-img-top img-fluid" alt="{{product.name}}"></a>
+								<div class="card-body">
+									<h5 class="card-title">{{product.name}}</h5>
+									<p class="card-text">{{product.subtitle}}</p>
+									<p>{{product.price/100}}
+										€</p>
+									<p>{{product.category}}</p>
+								</div>
+							</div>
+						</div>
+
+					{% endfor %}
+				</div>
+			</div>
+
+		</div>
+
+	{% endblock %}
