@@ -26,14 +26,15 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if (count($searchFilter->getCategories()) > 0) {
-                foreach ($searchFilter->getCategories() as $categorie) {
+            if (count($searchFilter->getCategories()) > 0 || $searchFilter->getString()) {
+               
+               /* foreach ($searchFilter->getCategories() as $categorie) {
 
                     $tabId[] = $categorie->getId();
-                }
+                }*/
 
-                
-                $products = $repo->findByCategory($tabId);
+                $products = $repo->FindSearch($searchFilter);
+                //$products = $repo->findByCategory($tabId);
             } else 
             {
                 $products = $repo->findAll();

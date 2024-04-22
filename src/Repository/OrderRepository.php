@@ -20,7 +20,38 @@ class OrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Order::class);
     }
+    public function FindOrder($email){
+        $queryBuilder = $this->createQueryBuilder('o')
+            ->join('o.user','user')
+            ->addSelect('user')
+            ->where('user.email = :email' )
+            ->setParameter('email', $email);
 
+// On recupere la requete 
+$query = $queryBuilder->getQuery();
+
+// On recupere les resultats , ces resultats sont sous forme d'un tableau d'objet
+$results = $query->getResult();
+
+return $results;
+
+    }
+
+    public function FindPaidOrder($user)
+    {
+        $queryBuilder = $this->createQueryBuilder('o')
+        ->where('o.statut = 1')
+        ->andwhere('o.user = :user')
+        ->setParameter('user', $user);
+
+        // On recupere la requete 
+$query = $queryBuilder->getQuery();
+
+// On recupere les resultats , ces resultats sont sous forme d'un tableau d'objet
+return $results = $query->getResult();
+
+
+    }
 //    /**
 //     * @return Order[] Returns an array of Order objects
 //     */

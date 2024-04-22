@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes{% endblock %}
+
+{% block content %}
+
+<h1 class="mt-3"> Je visualise ma commande  n° {{order.reference}}</h1>
+
+<hr>
+<strong> Commande passée le : {{order.createdAt |date("d/m/y")}}<br>
+<strong> Reference : </strong>{{order.reference}}<br>
+<strong> Transporteur : </strong>{{order.carrier.name}}<br>
+<hr>
+
+<strong>Details</strong><br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Produit</th>
+      <th> Commentaire</th>
+      <th scope="col">Qauntité</th>
+      <th scope="col">Prix unitaire</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for product in order.orderDetails %}
+    <tr>
+      <th scope="row">{{product.product.name}}</th>
+      <th> <a href"">Votre commentaire</a></th>
+      <td>{{product.quantity}}</td>
+      <td>{{(product.price/100) | number_format(2)}} €</td>
+      <td>{{(product.price*product.quantity)/100 | number_format(2)}} €</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+<div class="text-end">
+<strong> Sous Total:</strong>{{(order.getTotal/100) | number_format(2)}}€<br>
+<strong> Livraison  : </strong>{{(order.carrier.price) | number_format(2)}}<br>
+<strong> Total : </strong>{{(order.carrier.price + order.total/100) | number_format(2)}}
+{% endblock %}

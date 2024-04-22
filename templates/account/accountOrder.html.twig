@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Commandes{% endblock %}
+
+{% block content %}
+
+<h1 class="mt-3"> Mes commandes </h1>
+<p> Retrouvez toutes vos commandes </p>
+<hr>
+{% if orders | length == 0 %}
+<p> Vous n'avez pas encore passé de commande </p>
+{% else %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Reference</th>
+      <th scope="col">Passée le </th>
+      <th scope="col">Nombre de Produits</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for order in orders %} 
+    <tr>
+      <th scope="row">{{order.reference}}</th>
+      <td>{{order.createdAt |date('d/m/y')}}</td>
+      <td>{{order.orderDetails|length}}</td>
+      <td>{{((order.getTotal)/100 + (order.carrier.price)) |number_format(2)}} €</td>
+      <td><a href='{{path('account_order_show',{'reference' :order.reference})}}'> Voir ma commande </a></td>
+    </tr>
+   {% endfor %}
+   {% endif %}
+  </tbody>
+</table>
+{% endblock %}

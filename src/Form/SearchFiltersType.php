@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\SearchFilters;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SearchFiltersType extends AbstractType
@@ -15,6 +17,11 @@ class SearchFiltersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+        ->add('string',TextType::class,[
+            'required'=>false,
+            'label'=>false,
+            'attr'=>['placeholder'=>'Rechercher']
+        ])
             ->add('categories',EntityType::class,[
                 'class' => Category::class,
                 'choice_label' => 'name',
