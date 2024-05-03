@@ -11,6 +11,32 @@
 	<div class="row">
 		<div class="col-md-5">
 			<img src="/uploads/{{product.picture}}" alt="{{product.name}}" class="img-fluid">
+			<div class="alert alert-info mt-3">
+
+				<div class="row">
+					<div class="col-7">Note sur
+						{{product.comments | length}}
+						commentaire(s)
+																																																																																										:</div>
+					<div class="col-5">
+						{% include "partials/rating.html.twig" with{'rating':product.AverageComment} %}
+					</div>
+				</div>
+			</div>
+
+
+			{% if product.comments | length > 0 %}
+				{% for comment in product.comments %}
+					{% if comment.statut != 0 %}
+						<div class="alert alert-light">
+							{{ comment.content }}<br>
+							{% include "partials/rating.html.twig" with {'rating': comment.rating} %}
+						</div>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<p>Il n'y a pas de commentaire(s).</p>
+			{% endif %}
 		</div>
 		<div class="col-md-7">
 			<h3>{{product.name}}</h3>
@@ -23,5 +49,4 @@
 		</div>
 
 	</div>
-
 {% endblock %}

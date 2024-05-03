@@ -28,7 +28,9 @@
 					{% for product in products %}
 
 						<div class="col">
+							{% include "partials/rating.html.twig"with{'rating':product.AverageComment} %}
 							<div class="card">
+
 								<a href="{{path('product',{'slug':product.slug})}}"><img src="/uploads/{{product.picture}}" class="card-img-top img-fluid" alt="{{product.name}}"></a>
 								<div class="card-body">
 									<h5 class="card-title">{{product.name}}</h5>

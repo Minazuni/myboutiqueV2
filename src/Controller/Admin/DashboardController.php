@@ -6,6 +6,7 @@ use App\Entity\Carrier;
 use App\Entity\User;
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Order;
 use App\Repository\OrderRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,5 +70,6 @@ $orderNoValid = count($this->order->findByStatut(0));
         yield MenuItem::linkToCrud('Catégories', 'fas fa-folder', Category::class);
         yield MenuItem::linkToCrud('Produits', 'fas fa-tags', Product::class);
         yield MenuItem::linkToCrud('Transporteurs', 'fas fa-truck', Carrier::class);
+        yield MenuItem::linkToCrud('Commentaires', 'fas fa-comments', Comment::class);
     }
 }

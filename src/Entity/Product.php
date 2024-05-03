@@ -204,4 +204,50 @@ class Product
 
         return $this;
     }
+
+    public function getAverageComment()
+    {
+        $somme = 0;
+        $totalComments = count($this->comments);
+
+        // Vérifier si le produit a des avis
+        if ($totalComments > 0) {
+            foreach ($this->comments as $comment) {
+                $somme += $comment->getRating();
+            }
+            return $somme / $totalComments;
+        } else {
+            return 0; // Retourner 0 si le produit n'a pas d'avis
+        }
+    }
+    public function isProductFromUser(User $user)
+    {
+        // Parcours de chaque commande de l'utilisateur
+        foreach ($user->getOrders() as $orders) {
+            // Parcours de chaque détail de commande dans une commande
+            foreach ($orders->getOrderDetails() as $orderDetail) {
+                // Vérification si le produit dans le détail de commande correspond à ce produit
+                // et si la commande est confirmée (statut == true)
+                if ($orderDetail->getProduct()->getId() == $this->id && $orders->getStatut()) {
+                    // Si c'est le cas, retourne le produit
+                    return $orderDetail->getProduct();
+                }
+            }
+        }
+        // Si le produit n'est pas trouvé dans les commandes de l'utilisateur, retourne null
+        return null;
+    }
+    public function getCommentFromUser(User $user)
+    {
+        // Parcours de chaque commentaire associé à ce produit
+        foreach ($this->comments as $comment) {
+            // Vérifie si l'utilisateur du commentaire correspond à l'utilisateur passé en paramètre
+            if ($comment->getUser() === $user) {
+                // Si c'est le cas, retourne le commentaire
+                return $comment;
+            }
+        }
+        // Si aucun commentaire de cet utilisateur n'est trouvé, retourne null
+        return null;
+    }
 }
